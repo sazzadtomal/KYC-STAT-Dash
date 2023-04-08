@@ -4,46 +4,58 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
-    <title>Read from excel</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <title>Document</title>
   </head>
   <body>
     <div class="container">
-      <img src="./BKash_Logo_icon.svg" alt="" />
-      <div class="placeholder">
-        <div class="placehoder__header">
-          <label for="dom_workbook" class="label"
-            >Place your Excel file here</label
-          >
-        </div>
-        <div class="placeholder__content">
-          <input type="file" name="" id="dom_workbook" />
+      <div class="sidebar">
+        <div class="upload">
+          <h3>Upload Excel Here</h3>
+          <div class="file_upload">
+            <input type="file" name="" id="dom_workbook" hidden />
+            <label for="dom_workbook">Choose File</label>
+          </div>
         </div>
       </div>
-      <table class="table_design">
-        <tr>
-          <th>Total</th>
-          <th>Agent</th>
-          <th>Merchant</th>
-          <th>Lite_B</th>
-        </tr>
-        <td id="total">0</td>
-        <td id="agent">0</td>
-        <td id="merchant">0</td>
-        <td id="lite_b">0</td>
-      </table>
-      <footer class="disclaimer">
-        <p>&copy; all right reserved by SazzadTomal</p>
-      </footer>
+
+      <div class="main_dash">
+        <div class="visual_block">
+          <div class="pie_block">
+            <canvas id="sla_myChart"></canvas>
+          </div>
+          <div class="pie_legend_block">
+            <div class="pie_legend">
+              <h2>SLA</h2>
+              <h1 id="sla">0</h1>
+              <div class="sla_num">
+                <span>Within:</span> <span id="sla_w">0</span> <br />
+                <br />
+                <span>Beyond:</span> <span id="sla_b">0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="visual_block vertical">
+          <h2 class="center">CDD</h2>
+          <div class="pie_block">
+            <canvas id="cdd_myChart"></canvas>
+          </div>
+          <div class="pie_legend_block">
+            <div class="pie_legend">
+              <div class="cdd_num">
+                <span>Total:</span> <span id="cdd_total">0</span> <br />
+                <span>Accepted:</span> <span id="cdd_act">0</span> <br />
+                <span>Rejected:</span> <span id="cdd_rej">0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <script type="module" src="./app.js"></script>
+    <script src="./app.js"></script>
   </body>
 </html>

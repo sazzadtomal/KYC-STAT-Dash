@@ -1,61 +1,102 @@
 body {
-  background-color: #d6d6d6;
-  font-family: "Open Sans";
-  font-weight: 300;
+  margin: 0;
+  background-image: url(./copyright.png);
 }
-
-.placeholder {
-  color: beige;
-  display: flex;
-  flex-direction: row;
-  background-color: #d6d6d6;
-  max-width: 30rem;
-  border-radius: 10px;
-  text-align: center;
-}
-
-.placehoder__header {
-  width: 5rem;
-  height: 5rem;
-  padding: 1rem;
-  border-radius: 10px;
-  background-color: #e2136e;
-  display: flex;
-}
-
-.placehoder__header .label {
-  align-self: center;
-}
-
-.placeholder__content {
-  align-self: center;
-  margin: 10px 10px;
+label {
+  background-color: white;
   color: #e2136e;
-}
-
-.table_design {
-  margin-top: 2rem;
-  border: 1px solid #e2136e;
-  border-radius: 2px;
-  text-align: center;
-  font-weight: 700;
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: #707070;
 }
 
 .container {
-  margin: 5rem;
-  background-color: white;
-  margin: auto;
-  border-radius: 10px;
-  padding: 5rem;
-  max-width: 400px;
   display: flex;
-  flex-direction: column;
-  border: 2.5px solid #9e1638;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  height: 100vh;
+}
+.sidebar {
+  background-color: #e2136e;
+  color: white;
+  padding: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.disclaimer {
-  margin-top: 5rem;
+.main_dash {
+  display: grid;
+  margin: 2rem;
+}
+
+.file_upload {
+  margin-top: 2rem;
+}
+
+h1 {
+  font-size: 3.5rem;
+  color: #707070;
+  margin: 1rem 0;
+}
+h2 {
+  margin: 0;
+}
+
+.center {
   text-align: center;
-  font-size: 0.55rem;
-  color: grey;
+}
+
+.visual_block {
+  border: 1px solid #d6d6d6;
+  padding: 1rem;
+  padding-bottom: 2rem;
+  border-radius: 50px;
+  display: grid;
+  grid-template: repeat(1, 1fr) / repeat(2, 22rem);
+  box-shadow: 6px 5px 12px #888888;
+  justify-content: center;
+  align-self: center;
+  max-width: 50rem;
+  background-color: white;
+}
+.pie_block {
+  max-width: 400px;
+}
+
+.pie_legend_block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  align-self: center;
+}
+
+.pie_legend {
+  align-content: center;
+}
+
+#sla_w {
+  color: #d12053;
+}
+
+#sla_b {
+  color: #d12053;
+}
+
+/* CDD*/
+.vertical {
+  grid-template: repeat(3, auto) / repeat(1, auto);
+  max-width: 30rem;
+  max-height: 22rem;
+}
+
+.vertical .pie_legend {
+  margin-top: 2rem;
+}
+
+.vertical .pie_block {
+  max-width: 250px;
 }
