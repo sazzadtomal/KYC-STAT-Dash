@@ -2,60 +2,122 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="project developed by SazzadTomal(sazzadalamtomal00786@gmail.com)"
+    />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
-    <link rel="stylesheet" href="./styles.css" />
     <title>KycStatDash</title>
   </head>
   <body>
     <div class="container">
       <div class="sidebar">
-        <div class="upload">
-          <h3>Upload Excel Here</h3>
-          <div class="file_upload">
-            <input type="file" name="" id="dom_workbook" hidden />
-            <label for="dom_workbook">Choose File</label>
+        <div class="upload_block">
+          <div class="upload">
+            <div class="file_upload">
+              <input type="file" name="" id="dom_workbook" hidden />
+              <label for="dom_workbook"
+                ><img
+                  class="bkash_logo"
+                  src="./Bkash.png"
+                  alt="Bkash logo for file upload"
+              /></label>
+            </div>
           </div>
         </div>
       </div>
+      <div class="content">
+        <div class="date_block">
+          <h1 id="day">30</h1>
+          <h2 id="month">September</h2>
+          <h2 id="year">2022</h2>
+        </div>
 
+        <select id="select_month">
+          <option value="0">January</option>
+          <option value="1">February</option>
+          <option value="2">March</option>
+          <option value="3">April</option>
+          <option value="4">May</option>
+          <option value="5">June</option>
+          <option value="6">July</option>
+          <option value="7">August</option>
+          <option value="8">September</option>
+          <option value="9">October</option>
+          <option value="10">November</option>
+          <option value="11">December</option>
+        </select>
+
+        <div class="line"></div>
+        <div class="sec_btn">
+          <button class="dept_btn" id="overview_btn" autofocus>Overview</button>
+          <button class="dept_btn" id="channel_btn">Channel</button>
+          <button class="dept_btn" id="pra_btn">PRA</button>
+          <button class="dept_btn" id="e_kyc_btn">E_KYC</button>
+          <button class="dept_btn" id="merchant_btn">Merchant+</button>
+        </div>
+      </div>
       <div class="main_dash">
-        <div class="visual_block">
+        <div class="visual_block vertical">
+          <h2>SLA</h2>
           <div class="pie_block">
             <canvas id="sla_myChart"></canvas>
           </div>
           <div class="pie_legend_block">
             <div class="pie_legend">
-              <h2>SLA</h2>
-              <h1 id="sla">0</h1>
-              <div class="sla_num">
-                <span>Within:</span> <span id="sla_w">0</span> <br />
-                <br />
-                <span>Beyond:</span> <span id="sla_b">0</span>
-              </div>
+              <span>Total:</span> <span id="sla_w">0</span> <br />
+              <span>Within:</span> <span id="sla_b">0</span> <br />
+              <span>Beyond:</span> <span id="sla">0</span>
             </div>
           </div>
         </div>
+
         <div class="visual_block vertical">
-          <h2 class="center">CDD</h2>
+          <h2>CDD</h2>
           <div class="pie_block">
             <canvas id="cdd_myChart"></canvas>
           </div>
           <div class="pie_legend_block">
             <div class="pie_legend">
-              <div class="cdd_num">
-                <span>Total:</span> <span id="cdd_total">0</span> <br />
-                <span>Accepted:</span> <span id="cdd_act">0</span> <br />
-                <span>Rejected:</span> <span id="cdd_rej">0</span>
-              </div>
+              <span>Total:</span> <span id="cdd_total">0</span> <br />
+              <span>Accepted:</span> <span id="cdd_act">0</span> <br />
+              <span>Rejected:</span> <span id="cdd_rej">0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="visual_block vertical">
+          <h2>REJECTs</h2>
+          <div class="pie_block">
+            <canvas id="rejects_myChart"></canvas>
+          </div>
+          <div class="pie_legend_block">
+            <div class="pie_legend">
+              <span>Accepted:</span> <span id="cdd_act">0</span> <br />
+              <span>Rejected:</span> <span id="cdd_rej">0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="visual_block vertical">
+          <h2>Overall SLA</h2>
+          <div class="pie_block">
+            <canvas id="overall_myChart"></canvas>
+          </div>
+          <div class="pie_legend_block">
+            <div class="pie_legend">
+              <span>Total:</span> <span id="over_total">0</span> <br />
+              <span>Within:</span> <span id="cdd_act">0</span> <br />
+              <span>Beyond:</span> <span id="cdd_rej">0</span>
             </div>
           </div>
         </div>
       </div>
     </div>
-
     <script src="./app.js"></script>
   </body>
 </html>
