@@ -3,14 +3,17 @@ let uploaded = false;
 let workbook;
 var out_sla;
 var out_cdd;
+var out_reject;
+var out_line;
 let sla_total = 0;
 let cdd_total = 0;
+let reject_total = 0;
 let SLA_Array = [20, 80];
 let CDD_Array = [160, 50];
-let REJECTS_Array = [133, 60];
-let registration = [10, 15, 20, 17, 89, 63, 65, 487, 21, 187, 45, 78];
-let reject = [145, 115, 420, 117, 149, 92, 11, 10, 114, 841, 145, 780];
-let accept = [156, 123, 147, 117, 890, 831, 650, 411, 111, 17, 74, 92];
+let REJECT_Array = [133, 60];
+let LINE_REGISTERED = [10, 15, 20, 17, 89, 63, 65, 487, 21, 187, 45, 78];
+let LINE_REJECT = [145, 115, 420, 117, 149, 92, 11, 10, 114, 841, 145, 780];
+let LINE_RECEIVED = [156, 123, 147, 117, 890, 831, 650, 411, 111, 17, 74, 92];
 
 var sla_graph;
 var cdd_graph;
@@ -52,12 +55,19 @@ async function handleFileAsync(e) {
   workbook = XLSX.readFile(data);
   const worksheet_sla = workbook.Sheets["SLA"];
   const worksheet_cdd = workbook.Sheets["CDD"];
+  const worksheet_reject = workbook.Sheets["REJECT"];
+  const worksheet_line = workbook.Sheets["LINE"];
   out_sla = XLSX.utils.sheet_to_json(worksheet_sla);
   out_cdd = XLSX.utils.sheet_to_json(worksheet_cdd);
+  out_reject = XLSX.utils.sheet_to_json(worksheet_reject);
+  out_line = XLSX.utils.sheet_to_json(worksheet_line);
+
   uploaded = true;
   document.getElementById("overview_btn").focus();
   read_sla_overview();
   read_cdd_overview();
+  read_rejects_overview();
+  read_line_chart_overview();
   graph_initialization();
   update_values();
 }
@@ -122,24 +132,71 @@ function read_cdd_overview() {
 
 /*Reading_Rejects*/
 function read_rejects_chn() {
-  REJECTS_Array[0] = out_cdd[m].ACCEPT_CHN;
-  REJECTS_Array[1] = out_cdd[m].REJECT_CHN;
+  REJECT_Array[0] = out_reject[m].ACCEPT_CHN;
+  REJECT_Array[1] = out_reject[m].REJECT_CHN;
+  reject_total = out_reject[m].TOTAL_CHN;
 }
 function read_rejects_ekyc() {
-  REJECTS_Array[0] = out_cdd[m].ACCEPT_CHN;
-  REJECTS_Array[1] = out_cdd[m].REJECT_CHN;
+  REJECT_Array[0] = out_reject[m].ACCEPT_KYC;
+  REJECT_Array[1] = out_reject[m].REJECT_KYC;
+  reject_total = out_reject[m].TOTAL_KYC;
 }
 function read_rejects_pra() {
-  REJECTS_Array[0] = out_cdd[m].ACCEPT_CHN;
-  REJECTS_Array[1] = out_cdd[m].REJECT_CHN;
+  REJECT_Array[0] = out_reject[m].ACCEPT_PRA;
+  REJECT_Array[1] = out_reject[m].REJECT_PRA;
+  reject_total = out_reject[m].TOTAL_PRA;
 }
 function read_rejects_merchantp() {
-  REJECTS_Array[0] = out_cdd[m].ACCEPT_CHN;
-  REJECTS_Array[1] = out_cdd[m].REJECT_CHN;
+  REJECT_Array[0] = out_reject[m].ACCEPT_MPLUS;
+  REJECT_Array[1] = out_reject[m].REJECT_MPLUS;
+  reject_total = out_reject[m].TOTAL_MPLUS;
 }
 function read_rejects_overview() {
-  REJECTS_Array[0] = out_cdd[m].ACCEPT_CHN;
-  REJECTS_Array[1] = out_cdd[m].REJECT_CHN;
+  REJECT_Array[0] = out_reject[m].ACCEPT;
+  REJECT_Array[1] = out_reject[m].REJECT;
+  reject_total = out_reject[m].TOTAL_CHN;
+}
+
+/*Reading_line_chart*/
+
+function read_line_chart_overview() {
+  for (let i = 0; i <= 11; i++) {
+    LINE_RECEIVED[i] = out_line[i].LINE_RECEIVED;
+    LINE_REGISTERED[i] = out_line[i].LINE_REGISTERED;
+    LINE_REJECT[i] = out_line[i].LINE_REJECT;
+  }
+}
+
+function read_line_chart_chn() {
+  for (let i = 0; i <= 11; i++) {
+    LINE_RECEIVED[i] = out_line[i].LINE_RECEIVED_CHN;
+    LINE_REGISTERED[i] = out_line[i].LINE_REGISTERED_CHN;
+    LINE_REJECT[i] = out_line[i].LINE_REJECT_CHN;
+  }
+}
+
+function read_line_chart_ekyc() {
+  for (let i = 0; i <= 11; i++) {
+    LINE_RECEIVED[i] = out_line[i].LINE_RECEIVED_KYC;
+    LINE_REGISTERED[i] = out_line[i].LINE_REGISTERED_KYC;
+    LINE_REJECT[i] = out_line[i].LINE_REJECT_KYC;
+  }
+}
+
+function read_line_chart_pra() {
+  for (let i = 0; i <= 11; i++) {
+    LINE_RECEIVED[i] = out_line[i].LINE_RECEIVED_PRA;
+    LINE_REGISTERED[i] = out_line[i].LINE_REGISTERED_PRA;
+    LINE_REJECT[i] = out_line[i].LINE_REJECT_PRA;
+  }
+}
+
+function read_line_chart_merchantp() {
+  for (let i = 0; i <= 11; i++) {
+    LINE_RECEIVED[i] = out_line[i].LINE_RECEIVED_MPLUS;
+    LINE_REGISTERED[i] = out_line[i].LINE_REGISTERED_MPLUS;
+    LINE_REJECT[i] = out_line[i].LINE_REJECT_MPLUS;
+  }
 }
 
 /*Changes_text Values*/
@@ -148,10 +205,11 @@ function update_values() {
   document.getElementById("sla_b").textContent = SLA_Array[1];
   document.getElementById("sla").textContent = sla_total;
   document.getElementById("cdd").textContent = cdd_total;
+  document.getElementById("total").textContent = reject_total;
   document.getElementById("cdd_act").textContent = CDD_Array[0];
   document.getElementById("cdd_rej").textContent = CDD_Array[1];
-  document.getElementById("accept").textContent = REJECTS_Array[0];
-  document.getElementById("reject").textContent = REJECTS_Array[1];
+  document.getElementById("accept").textContent = REJECT_Array[0];
+  document.getElementById("reject").textContent = REJECT_Array[1];
 }
 
 /*graph-calls*/
@@ -200,7 +258,7 @@ function graph_initialization() {
       labels: ["Accepted", "Rejected"],
       datasets: [
         {
-          data: REJECTS_Array,
+          data: REJECT_Array,
           backgroundColor: ["#E2136E", "#707070"],
         },
       ],
@@ -208,28 +266,32 @@ function graph_initialization() {
   });
 
   line_graph = new Chart(line_chart, {
-    type: "line",
     data: {
       labels: months,
       datasets: [
         {
-          label: "Registered",
-          data: registration,
-
-          borderColor: "rgb(75, 192, 192)",
+          type: "bar",
+          label: "RECEIVED",
+          data: LINE_RECEIVED,
+          backgroundColor: "rgba(127, 127, 127, 0.515)",
           tension: 0.1,
+          order: 3,
         },
         {
-          label: "Rejects",
-          data: reject,
-          borderColor: "#D6D6D6",
+          type: "line",
+          label: "REGISTERED",
+          data: LINE_REGISTERED,
+          borderColor: "rgb(0, 126, 126)",
           tension: 0.1,
+          order: 1,
         },
         {
-          label: "Accept",
-          data: accept,
+          type: "line",
+          label: "REJECT",
+          data: LINE_REJECT,
           borderColor: "#E2136E",
           tension: 0.1,
+          order: 2,
         },
       ],
     },
@@ -271,6 +333,7 @@ function render_channel() {
   read_sla_chn();
   read_cdd_chn();
   read_rejects_chn();
+  read_line_chart_chn();
   update_values();
   graph_initialization();
 }
@@ -282,6 +345,7 @@ function render_ekyc() {
   read_sla_ekyc();
   read_cdd_ekyc();
   read_rejects_ekyc();
+  read_line_chart_ekyc();
   update_values();
   graph_initialization();
 }
@@ -291,6 +355,7 @@ function render_pra() {
   read_sla_pra();
   read_cdd_pra();
   read_rejects_pra();
+  read_line_chart_pra();
   update_values();
   graph_initialization();
 }
@@ -301,6 +366,7 @@ function render_merchantp() {
   read_sla_merchantp();
   read_cdd_merchantp();
   read_rejects_merchantp();
+  read_line_chart_merchantp();
   update_values();
   graph_initialization();
 }
@@ -311,6 +377,7 @@ function render_overview() {
   read_sla_overview();
   read_cdd_overview();
   read_rejects_overview();
+  read_line_chart_overview();
   update_values();
   graph_initialization();
 }
